@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Darkholme Store</title>
+{% endblock %}
+
+{% block body %}
+    <div class="product-catagory-section section-top-gap-100">
+        <div class="section-content-gap">
+            <div class="container">
+                <div class="row">
+                    <div class="section-content">
+                        <h3 class="section-title">Категории товаров</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="product-catagory-wrapper">
+            <div class="container">
+                <div class="row">
+                    {% for category in categories %}
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                        <a href="/category/{{ category.name }}" class="product-catagory-single">
+                            <div class="product-catagory-img">
+                                <img src="{{ get_category_image(category) }}" alt="">
+                            </div>
+                            <div class="product-catagory-content">
+                                <h5 class="product-catagory-title">{{ category.name }}</h5>
+                                <span class="product-catagory-items">{{ len(get_items_by_category(category.name)) }} товара(ов)</span>
+                            </div>
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div> <!-- End Catagory Wrapper -->
+    </div> <!-- ...:::: End Product Catagory Section:::... -->
+{% endblock %}

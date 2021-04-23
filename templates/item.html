@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>{{ item.name }}</title>
+{% endblock %}
+
+{% block body %}
+    <div class="breadcrumb-section">
+        <div class="breadcrumb-wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-between justify-content-md-between  align-items-center flex-md-row flex-column">
+                        <h3 class="breadcrumb-title">{{ item.name }}</h3>
+                        <div class="breadcrumb-nav">
+                            <nav aria-label="breadcrumb">
+                                <ul>
+                                    <li><a href="/">Категории</a></li>
+                                    <li><a href="/category/{{ category }}">{{ category }}</a></li>
+                                    <li class="active" aria-current="page">{{ item.name }}</li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="product-details-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="product-details-gallery-area">
+                        <div class="product-large-image product-large-image-horaizontal">
+                            <div class="product-image-large-single zoom-image-hover">
+                                <img src="{{ get_item_image(item) }}" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="product-details-content-area">
+                        <div class="product-details-text">
+                            <h4 class="title">{{ item.name }}</h4>
+                            <div class="price">{{ get_price(item) }} RUB</div>
+                            <p>{{ item.description }}</p>
+                        </div>
+                        <div class="product-details-variable">
+                            <div class="d-flex align-items-center">
+                                <form action="/add/{{ item.id }}">
+                                    <div>
+                                        <button type="submit" class="contact-submit-btn">Добавить в корзину</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,1 @@
+COUPONS = {'test': 100}

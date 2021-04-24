@@ -84,7 +84,7 @@
                                 </div>
                                 <div class="cart_subtotal ">
                                     <p>Скидка купона {% if discount != '0' and get_discount() != 0 %} ({{ discount }}) {% endif %}</p>
-                                    <p class="cart_amount">{{ get_discount() }} RUB</p>
+                                    <p class="cart_amount">{{ get_nice_price(get_discount()) }} RUB</p>
                                 </div>
                                 <a></a>
 

@@ -43,12 +43,15 @@ def get_price(item):
 def get_nice_price(price):
     price = format(price, '.2f')
     a = list()
-    for i in range(len(price[:-7]), -1, -3):
-        a.append(i)
-    value = list(price)
-    for i in a:
-        value.insert(i + 1, " ")
-    return ''.join(value)
+    if float(price) >= 1000:
+        for i in range(len(price[:-7]), -1, -3):
+            a.append(i)
+        value = list(price)
+        for i in a:
+            value.insert(i + 1, " ")
+        return ''.join(value)
+    else:
+        return price
 
 
 def get_item_object(item):
@@ -73,11 +76,6 @@ def get_amount_cart(cart):
     return sum
 
 
-def get_discount():
-    if not request.cookies.get('discount'):
-        pass
-
-
 def get_cart_size():
     return len(request.cookies.get('cart').split(';')) - 1
 
@@ -85,7 +83,10 @@ def get_cart_size():
 def get_total_cart(cart):
     amount = get_amount_cart(cart)
     discount = get_discount()
-    return amount - discount
+    total = amount - discount
+    if total < 0:
+        total = 0
+    return total
 
 
 def get_discount():

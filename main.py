@@ -35,7 +35,8 @@ def index():
 def cart():
     if request.method == 'POST':
         res = make_response(redirect('/cart'))
-        res.set_cookie('discount', request.form['coupon'], max_age=60*60*24)
+        if request.form['coupon'] != '':
+            res.set_cookie('discount', request.form['coupon'], max_age=60*60*24)
         return res
 
     elif request.method == 'GET':
@@ -50,7 +51,7 @@ def cart():
         else:
             items = list()
         global db_sess
-        return render_template('cart.html', cart=items, cart_size=len(request.cookies.get('cart').split(';')) - 1,
+        return render_template('cart.html', cart=items, cart_size=get_cart_size(),
                                 get_item_image=get_item_image, get_price=get_price,
                                 category=lambda x: db_sess.query(Category).filter(Category.id == x).first().name,
                                 int=lambda x:int(x), get_amount_cart=get_amount_cart, get_nice_price=get_nice_price,
@@ -78,12 +79,14 @@ def product_page(category, item):
         return redirect('/init_discount')
     return render_template('item.html', item=get_item_object(item), category=category,
                             get_item_image=get_item_image, get_price=get_price,
-                            cart_size=len(request.cookies.get('cart').split(';')) - 1)
+                            cart_size=get_cart_size())
 
 
 @app.route('/checkout')
 def checkout():
-    return render_template('checkout.html', get_cart_for_checkout=get_cart_for_checkout, cart_size=get_cart_size())
+    res = make_response(render_template('checkout.html', get_cart_for_checkout=get_cart_for_checkout(), cart_size=0))
+    res.set_cookie('cart', '0', max_age=60*60*24)
+    return res
 
 
 @app.route('/search', methods=['POST'])
